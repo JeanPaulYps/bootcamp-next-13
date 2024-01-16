@@ -1,30 +1,42 @@
 import Link from "next/link";
 import React from "react";
 
-function RestaurantCard() {
+function RestaurantCard({
+  name,
+  description,
+  price,
+  cuisine,
+  location,
+  image,
+  restaurantURL,
+}: {
+  name: string;
+  description: string;
+  price: string;
+  cuisine: string;
+  location: string;
+  image: string;
+  restaurantURL: string;
+}) {
   return (
-    <Link href="/restaurant/millestones">
+    <Link href={`/restaurant/${restaurantURL}`}>
       <div className="border-b flex pb-5">
-        <img
-          src="https://images.otstatic.com/prod1/49153814/2/medium.jpg"
-          alt=""
-          className="w-44 rounded"
-        />
+        <img src={image} alt="" className="w-44 rounded" />
         <div className="pl-5">
-          <h2 className="text-3xl">Aiāna Restaurant Collective</h2>
+          <h2 className="text-3xl">{name}</h2>
           <div className="flex items-start">
             <div className="flex mb-2">*****</div>
-            <p className="ml-2 text-sm">Awesome</p>
+            <p className="ml-2 text-sm">{description}</p>
           </div>
           <div className="mb-9">
             <div className="font-light flex text-reg">
-              <p className="mr-4">$$$</p>
-              <p className="mr-4">Mexican</p>
-              <p className="mr-4">Ottawa</p>
+              <p className="mr-4">{price}</p>
+              <p className="mr-4">{cuisine}</p>
+              <p className="mr-4">{location}</p>
             </div>
           </div>
           <div className="text-red-600">
-            <a href="">View more information</a>
+            <p>View more information</p>
           </div>
         </div>
       </div>
