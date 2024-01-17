@@ -1,7 +1,10 @@
+import { calculateAverage } from "@utils/calculationUtils";
+import { getReviewRatings } from "@utils/transformUtils";
 import Link from "next/link";
 import React from "react";
 import { RestaurantCardType } from "../page";
 import Price from "./price";
+import Stars from "./Stars";
 
 interface Props {
   restaurant: RestaurantCardType;
@@ -15,8 +18,11 @@ function RestaurantCard({ restaurant }: Props) {
         <div className="p-1">
           <h3 className="font-bold text-2xl mb-2">{restaurant.name}</h3>
           <div className="flex items-start">
-            <div className="flex mb-2">*****</div>
-            <p className="ml-2">77 reviews</p>
+            <Stars reviews={restaurant.Review} />
+            {/* <div className="flex mb-2">
+              {/(getReviewRatings(restaurant.Review)).toFixed(1)}
+            </div> */}
+            <p className="ml-2">{restaurant.Review.length} reviews</p>
           </div>
           <div className="flex text-reg font-light capitalize">
             <p className=" mr-3">{restaurant.cuisine.name}</p>

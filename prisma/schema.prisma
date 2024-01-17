@@ -68,6 +68,7 @@ model User {
   first_name String
   last_name  String
   city       String
+  password   String
   email      String
   phone      String
   created_at DateTime @default(now())
@@ -77,8 +78,10 @@ model User {
 
 model Review {
   id            Int        @id @default(autoincrement())
+  first_name    String
+  last_name     String
   text          String     @db.Text
-  raiting       Int
+  rating        Float
   user_id       Int
   User          User       @relation(fields: [user_id], references: [id])
   restaurant_id Int

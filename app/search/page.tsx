@@ -5,7 +5,10 @@ import {
   Prisma,
   PrismaClient,
   Restaurant,
+  Review,
 } from "@prisma/client";
+import { calculateAverage } from "@utils/calculationUtils";
+import { getReviewRatings } from "@utils/transformUtils";
 import Link from "next/link";
 import React from "react";
 import NavBar from "../components/NavBar";
@@ -19,6 +22,7 @@ type RestaurantDetail = Pick<
 > & {
   cuisine: { name: string };
   location: { name: string };
+  Review: Review[];
 };
 
 const prisma = new PrismaClient();
@@ -67,6 +71,7 @@ const searchRestaurant = async ({
       cuisine: {
         select: { name: true },
       },
+      Review: true,
       price: true,
       location: {
         select: {
@@ -127,6 +132,7 @@ async function Search({
                 location={restaurant.location.name}
                 price={restaurant.price}
                 restaurantURL={restaurant.slug}
+                reviews={restaurant.Review}
                 key={restaurant.id}
               />
             ))

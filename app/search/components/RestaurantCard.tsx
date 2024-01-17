@@ -1,3 +1,5 @@
+import Stars from "@/app/components/Stars";
+import { Review } from "@prisma/client";
 import Link from "next/link";
 import React from "react";
 
@@ -9,6 +11,7 @@ function RestaurantCard({
   location,
   image,
   restaurantURL,
+  reviews,
 }: {
   name: string;
   description: string;
@@ -17,6 +20,7 @@ function RestaurantCard({
   location: string;
   image: string;
   restaurantURL: string;
+  reviews: Review[];
 }) {
   return (
     <Link href={`/restaurant/${restaurantURL}`}>
@@ -25,7 +29,9 @@ function RestaurantCard({
         <div className="pl-5">
           <h2 className="text-3xl">{name}</h2>
           <div className="flex items-start">
-            <div className="flex mb-2">*****</div>
+            <div className="flex mb-2 shrink-0">
+              <Stars reviews={reviews} />
+            </div>
             <p className="ml-2 text-sm">{description}</p>
           </div>
           <div className="mb-9">

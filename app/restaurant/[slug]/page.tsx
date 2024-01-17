@@ -1,12 +1,13 @@
 import NavBar from "@/app/components/NavBar";
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient, Review } from "@prisma/client";
 import { Metadata } from "next";
 import Link from "next/link";
+import { notFound } from "next/navigation";
 import React from "react";
 import Description from "./components/Description";
 import Header from "./components/Header";
 import Images from "./components/Images";
-import Raiting from "./components/Raiting";
+import Rating from "./components/Rating";
 import ReservationCard from "./components/ReservationCard";
 import RestaurantNavbar from "./components/RestaurantNavbar";
 import Reviews from "./components/Reviews";
@@ -25,6 +26,7 @@ interface Restaurant {
   images: string[];
   description: string;
   slug: string;
+  Review: Review[];
 }
 
 const fetchRestaurant = async (slug: string): Promise<Restaurant> => {
@@ -36,11 +38,12 @@ const fetchRestaurant = async (slug: string): Promise<Restaurant> => {
       images: true,
       description: true,
       slug: true,
+      Review: true,
     },
   });
 
   if (restaurant === null) {
-    throw new Error();
+    notFound();
   }
 
   return restaurant;
@@ -58,10 +61,10 @@ async function RestaurantDetail({
       <div className="bg-white w-[70%] rounded p-3 shadow">
         <RestaurantNavbar slug={restaurant.slug} />
         <Title name={restaurant.name} />
-        <Raiting />
+        <Rating reviews={restaurant.Review} />
         <Description description={restaurant.description} />
         <Images images={restaurant.images} />
-        <Reviews />
+        <Reviews reviews={restaurant.Review} />
       </div>
       <div className="w-[27%] relative text-reg">
         <ReservationCard />
