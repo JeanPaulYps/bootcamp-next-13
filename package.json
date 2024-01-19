@@ -9,11 +9,21 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@emotion/react": "11.11.3",
+    "@emotion/styled": "11.11.0",
+    "@mui/material": "5.15.5",
     "@prisma/client": "4.8.1",
+    "@types/bcrypt": "5.0.2",
+    "@types/jsonwebtoken": "9.0.5",
+    "@types/validator": "13.11.8",
+    "bcrypt": "5.1.1",
+    "jose": "^5.2.0",
+    "jsonwebtoken": "9.0.2",
     "next": "14.0.4",
     "prisma": "4.8.1",
     "react": "18.2.0",
-    "react-dom": "18.2.0"
+    "react-dom": "18.2.0",
+    "validator": "13.11.0"
   },
   "devDependencies": {
     "@types/node": "20.11.2",
