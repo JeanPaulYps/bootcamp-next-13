@@ -4,7 +4,6 @@ import Image from "next/image";
 import React from "react";
 
 function Error({ error }: { error: Error }) {
-  console.log(error);
   return (
     <div className="h-screen bg-gray-200 flex flex-col justify-center items-center ">
       <Image

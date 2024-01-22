@@ -4,8 +4,11 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useContext, useEffect, useState } from "react";
 import AuthModalInputs from "./AuthModalInputs";
+import useAuth from "@/hooks/useAuth";
+import { AuthenticationContext } from "../context/authContext";
+import { Alert, CircularProgress } from "@mui/material";
 
 const style = {
   position: "absolute" as "absolute",
@@ -36,11 +39,47 @@ export default function AuthModal({ isSignIn }: { isSignIn: boolean }) {
     password: "",
   });
 
+  const { signIn, signUp } = useAuth();
+
+  const { loading, data, error } = useContext(AuthenticationContext);
+
+  const [disabled, setDisabled] = useState(true);
+  useEffect(() => {
+    if (isSignIn) {
+      if (inputs.password && inputs.email) {
+        setDisabled(false);
+        return;
+      }
+    } else {
+      if (Object.values(inputs).every((input) => input !== "")) {
+        setDisabled(false);
+        return;
+      }
+    }
+    setDisabled(true);
+  }, [inputs]);
+
   const handleChangeInput = (event: ChangeEvent<HTMLInputElement>) => {
     setInputs({
       ...inputs,
       [event.target.name]: event.target.value,
     });
+  };
+
+  const handleClick = () => {
+    if (isSignIn) {
+      signIn({ email: inputs.email, password: inputs.password, handleClose });
+    } else {
+      signUp({
+        firstName: inputs.firstName,
+        lastName: inputs.lastName,
+        city: inputs.city,
+        email: inputs.email,
+        password: inputs.password,
+        phone: inputs.phone,
+        handleClose,
+      });
+    }
   };
 
   return (
@@ -61,29 +100,44 @@ export default function AuthModal({ isSignIn }: { isSignIn: boolean }) {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          <div className="p-2 h-[600px]">
-            <div className="uppercase font-bold text-center pb-2 border-b mb-2">
-              <p className="text-sm">
-                {renderContent("Sign In", "Create Account")}
-              </p>
+          {loading ? (
+            <div className="py-24 h-[600px] flex justify-center">
+              <CircularProgress />
             </div>
-            <div className="m-auto">
-              <h2 className="text-2xl font-light text-center">
-                {renderContent(
-                  "Log Into Your Account",
-                  "Create Your OpenTable Account"
-                )}
-              </h2>
-              <AuthModalInputs
-                inputs={inputs}
-                handleChangeInput={handleChangeInput}
-                isSignIn={isSignIn}
-              />
-              <button className="uppercase bg-red-600 w-full text-white p-3 rounded text-sm mb-5 disabled:bg-gray-400">
-                {renderContent("Sign In", "Create Account")}
-              </button>
+          ) : (
+            <div className="p-2 h-[600px]">
+              {error && (
+                <Alert severity="error" className="mb-4">
+                  {error}
+                </Alert>
+              )}
+              <div className="uppercase font-bold text-center pb-2 border-b mb-2">
+                <p className="text-sm">
+                  {renderContent("Sign In", "Create Account")}
+                </p>
+              </div>
+              <div className="m-auto">
+                <h2 className="text-2xl font-light text-center">
+                  {renderContent(
+                    "Log Into Your Account",
+                    "Create Your OpenTable Account"
+                  )}
+                </h2>
+                <AuthModalInputs
+                  inputs={inputs}
+                  handleChangeInput={handleChangeInput}
+                  isSignIn={isSignIn}
+                />
+                <button
+                  className="uppercase bg-red-600 w-full text-white p-3 rounded text-sm mb-5 disabled:bg-gray-400"
+                  disabled={disabled}
+                  onClick={handleClick}
+                >
+                  {renderContent("Sign In", "Create Account")}
+                </button>
+              </div>
             </div>
-          </div>
+          )}
         </Box>
       </Modal>
     </div>

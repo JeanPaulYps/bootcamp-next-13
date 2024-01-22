@@ -5,9 +5,7 @@ import { getReviewRatings } from "@utils/transformUtils";
 import React from "react";
 
 function Rating({ reviews }: { reviews: Review[] }) {
-  console.log(reviews);
   const average = calculateAverage(getReviewRatings(reviews));
-  console.log(average);
   return (
     <div className="flex items-end">
       <div className="ratings mt-2 flex items-center">

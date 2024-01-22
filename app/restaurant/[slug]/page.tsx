@@ -54,7 +54,6 @@ async function RestaurantDetail({
 }: {
   params: { slug: string };
 }) {
-  // console.log(props);
   const restaurant = await fetchRestaurant(slug);
   return (
     <>

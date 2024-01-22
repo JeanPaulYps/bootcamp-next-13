@@ -37,8 +37,6 @@ const searchRestaurant = async ({
   price?: string;
 }): Promise<RestaurantDetail[]> => {
   let whereQuery: Prisma.RestaurantWhereInput = {};
-  console.log({ city, cuisine, price });
-  console.log(!!city);
   if (!city && !cuisine && !price) {
     return [];
   }
@@ -98,14 +96,12 @@ async function Search({
 }: {
   searchParams: { city?: string; cuisine?: string; price?: string };
 }) {
-  console.log(city, cuisine, price);
 
   const restaurants = await searchRestaurant({
     city,
     cuisine,
     price,
   });
-  console.log(restaurants);
 
   const locations = await getLocations();
   const cuisines = await getCuisines();
