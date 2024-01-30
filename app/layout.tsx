@@ -4,6 +4,7 @@ import Head from "next/head";
 import NavBar from "./components/NavBar";
 import AuthContext from "./context/authContext";
 import "./globals.css";
+import "react-datepicker/dist/react-datepicker.css"
 
 const inter = Inter({ subsets: ["latin"] });
 

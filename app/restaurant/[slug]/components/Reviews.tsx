@@ -10,8 +10,8 @@ function Reviews({ reviews }: { reviews: Review[] }) {
       </h1>
       <div>
         {/* REVIEW CARD */}
-        {reviews.map((review) => (
-          <div className="border-b pb-7 mb-7">
+        {reviews.map((review, index) => (
+          <div className="border-b pb-7 mb-7" key={index}>
             <div className="flex">
               <div className="w-1/6 flex flex-col items-center">
                 <div className="rounded-full bg-blue-400 w-16 h-16 flex items-center justify-center">
